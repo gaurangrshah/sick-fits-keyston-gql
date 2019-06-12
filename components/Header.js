@@ -4,7 +4,23 @@ import styled from 'styled-components';
 
 import Nav from './Nav';
 // importing <Nav/>
+import Router from 'next/router';
+import NProgress from 'nprogress';
+//package for progress indicators to use as loaders.
 
+
+Router.onRouteChangestart = () => {
+  console.log('onRouteChangeStart Triggered')
+  NProgress.start();
+}
+Router.onRouteChangecomplete = () => {
+  console.log('onRouteChangeComplete Triggered')
+  NProgress.done()
+}
+Router.onRouteChangeerror = () => {
+  NProgress.done()
+  console.log('onRouteChangeError Triggered')
+}
 
 const Logo = styled.h1`
   font-size: 4rem;
@@ -51,7 +67,7 @@ const Header = () => {
     <StyledHeader>
       <div className="bar">
         <Logo>
-          <h1><Link href="/"><a>Sick Fits</a></Link></h1>
+          <span><Link href="/"><a>Sick Fits</a></Link></span>
         </Logo>
         <Nav />
         {/* adds nav links */}

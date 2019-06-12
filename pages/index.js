@@ -1,10 +1,5 @@
+import Items from '../components/Items';
 
-const Home = props => {
-  return (
-    <div>
-      <p>Hey</p>
-    </div>
-  )
-}
+const Home = props => <Items page={parseFloat(props.query.page) || 1} />
 
 export default Home
