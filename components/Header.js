@@ -7,6 +7,7 @@ import Nav from './Nav';
 import Router from 'next/router';
 import NProgress from 'nprogress';
 //package for progress indicators to use as loaders.
+import Cart from './Cart';
 
 
 Router.onRouteChangestart = () => {
@@ -75,7 +76,7 @@ const Header = () => {
       <div className="sub-bar">
         <p>Search</p>
       </div>
-      <div>Cart</div>
+      <Cart />
     </StyledHeader>
   )
 }

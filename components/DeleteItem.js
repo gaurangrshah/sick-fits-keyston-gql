@@ -28,7 +28,7 @@ class DeleteItem extends Component {
     // removes the item that matches the id of the deleted item from the payload
 
     // 3. return new cache
-    cache.writeQuery({query: ALL_ITEMS_QUERY, data});
+    cache.writeQuery({ query: ALL_ITEMS_QUERY, data });
   }
 
   render() {
@@ -47,6 +47,7 @@ class DeleteItem extends Component {
             // ask for confirmation.
             if (confirm('Are you sure?')) {
               deleteItem().catch(err => {
+                //output error from deleteItem()
                 alert(err.message);
               });
             }

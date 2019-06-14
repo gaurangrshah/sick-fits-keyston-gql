@@ -110,6 +110,7 @@ class CreateItem extends Component {
 
               </label>
 
+
               <label htmlFor="title"> Title
                 <input type="text" id="title" name="title" placeholder="title" value={this.state.title} onChange={this.handleChange} required />
               </label>
