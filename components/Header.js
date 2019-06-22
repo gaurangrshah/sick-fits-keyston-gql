@@ -1,11 +1,12 @@
 import React from 'react';
+import Router from 'next/router';
+import NProgress from 'nprogress';
 import Link from 'next/link'
 import styled from 'styled-components';
 
 import Nav from './Nav';
+import Search from './Search';
 // importing <Nav/>
-import Router from 'next/router';
-import NProgress from 'nprogress';
 //package for progress indicators to use as loaders.
 import Cart from './Cart';
 
@@ -74,7 +75,7 @@ const Header = () => {
         {/* adds nav links */}
       </div>
       <div className="sub-bar">
-        <p>Search</p>
+        <Search/>
       </div>
       <Cart />
     </StyledHeader>
