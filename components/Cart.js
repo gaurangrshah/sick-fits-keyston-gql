@@ -66,9 +66,12 @@ const Cart = () => {
             <footer>
               <p>{formatMoney(calcTotalPrice(me.cart))}</p>
               {/* takes in the entire cart and returns total */}
-              <TakeMyMoney> {/* component that handles stripe checkout */}
-                <SickButton>Checkout</SickButton>
-              </TakeMyMoney>
+
+              {me.cart.length && ( // removes checkout button if cart is empty
+                <TakeMyMoney> {/* component that handles stripe checkout */}
+                  <SickButton>Checkout</SickButton>
+                </TakeMyMoney>
+              )}
             </footer>
           </CartStyles>
 
