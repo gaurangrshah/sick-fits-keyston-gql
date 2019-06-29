@@ -25,7 +25,7 @@ const SingleItemStyles = styled.div`
   }
 `;
 
-const SINGLE_ITEM_QUERY = gql`
+export const SINGLE_ITEM_QUERY = gql`
   query SINGLE_ITEM_QUERY($id: ID!) {
     item(where: { id: $id }) {
       id
@@ -50,7 +50,7 @@ class SingleItem extends Component {
           if (error) { return <Error error={error} /> }
           if (loading) { return 'loading...' }
           if (!data.item) { return <p>No Item Found for {this.props.id}</p> }
-          console.log(data);
+          // console.log(data);
 
           const item = data.item
           return (
