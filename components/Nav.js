@@ -10,7 +10,7 @@ const Nav = () => (
   <User>
     {({ data: { me } }) => (
 
-      <NavStyles>
+      <NavStyles data-test="nav">
         {me && <p>{me.name}</p>}
         <Link href="/items">
           <a>Shop</a>

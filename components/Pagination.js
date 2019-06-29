@@ -9,7 +9,7 @@ import PaginationStyles from './styles/PaginationStyles';
 import { perPage } from '../config';
 
 
-const PAGINATION_QUERY = gql`
+export const PAGINATION_QUERY = gql`
   query PAGINATION_QUERY {
     itemsConnection {
     #pulling the count (# of items) from aggregate:
@@ -29,9 +29,10 @@ const Pagination = props => (
       const page = props.page
       // destructuring page off props, because the head tag cannot access the data from props
       return (
-        <PaginationStyles>
+        <PaginationStyles data-test="pagination">
           <Head>
             <title>Sick Fits! - Page: {page} of {pages}</title>
+
           </Head>
           <Link prefetch href={{
             pathname: 'items',
@@ -39,10 +40,10 @@ const Pagination = props => (
             // will subtract  from the current page.
           }}>
             {/* back button label */}
-            <a className="Prev" aria-disabled={page <= 1}>⬅ Prev</a>
+            <a className="prev" aria-disabled={page <= 1}>⬅ Prev</a>
           </Link>
 
-          <p>{page} of {pages}</p>
+          <p>{page} of <span className="totalPages">{pages}</span></p>
           <p>{count} Items Total</p>
           <Link prefetch href={{
             pathname: 'items',
@@ -50,7 +51,7 @@ const Pagination = props => (
             // will subtract  from the current page.
           }}>
             {/* back button label */}
-            <a className="Next" aria-disabled={page >= pages}>Next ➡</a>
+            <a className="next" aria-disabled={page >= pages}>Next ➡</a>
           </Link>
         </PaginationStyles>
       ) // output pages.
