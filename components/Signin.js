@@ -6,7 +6,7 @@ import Error from './ErrorMessage';
 import { CURRENT_USER_QUERY } from './User';
 //imported query to to not have to rewrite it here.
 
-const SIGNIN_MUTATION = gql`
+export const SIGNIN_MUTATION = gql`
   mutation SIGNIN_MUTATION($email: String!, $password: String!) {
     signin(email: $email, password: $password) {
       id

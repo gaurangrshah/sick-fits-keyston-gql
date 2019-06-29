@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
 import { CURRENT_USER_QUERY } from './User';
 
-const REMOVE_FROM_CART_MUTATION = gql`
+export const REMOVE_FROM_CART_MUTATION = gql`
   mutation removeFromCart($id: ID!) {
     removeFromCart(id: $id) {
       id
@@ -31,14 +31,14 @@ class RemoveFromCart extends React.Component {
   // fires after mutation finishes - takes in the (cache, payload).
   // caches gives us access to everything in cache, payload is the info return from server, we expect the id of the item from the mutation that gets resolved.
   update = (cache, payload) => {
-    console.log('Running remove from cart update fn')
+    // console.log('Running remove from cart update fn') //⚠️
     // used to un-render cart items when removed:
 
     // 1. read cache
     const data = cache.readQuery({
       query: CURRENT_USER_QUERY
     });
-    // console.log(data);
+    // console.log(data); //⚠️
 
     // 2. remove that item from the cart
     const cartItemId = payload.data.removeFromCart.id;
@@ -85,10 +85,3 @@ class RemoveFromCart extends React.Component {
 }
 
 export default RemoveFromCart;
-
-
-
-
-
-
-

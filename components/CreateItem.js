@@ -9,7 +9,7 @@ import formatMoney from '../lib/formatMoney';
 import Error from './ErrorMessage';
 // has built-in error message handling and formatting
 
-const CREATE_ITEM_MUTATION = gql`
+export const CREATE_ITEM_MUTATION = gql`
 # first part is equivalent to a function call
   mutation CREATE_ITEM_MUTATION (
       # set types for each arg. and/or variables for each field
@@ -49,14 +49,14 @@ class CreateItem extends Component {
     const { name, type, value } = e.target
     const val = type === 'number' ? parseFloat(value) : value;
     // corecing any inputs of type number to numerical values before setting state.
-    console.log('handleChange', { name, type, value })
+    // console.log('handleChange', { name, type, value }) // ⚠️
 
     this.setState({ [name]: val })
   }
 
   uploadFile = async (e) => {
     // will get triggered when someone selects a file to upload.
-    console.log('uploading file');
+    // console.log('uploading file'); // ⚠️
     const files = e.target.files; // pulling uploaded files off e.target
     const data = new FormData(); // using javascript FormData api to prep form data.
     data.append('file', files[0]); // appends data to the file, targeting the first file it finds.
@@ -70,7 +70,7 @@ class CreateItem extends Component {
 
     //handle response
     const file = await res.json(); // converts the reponse object to a json object.
-    console.log(file);
+    // console.log(file); // ⚠️
 
     // set image from response to state:
     this.setState({
@@ -89,7 +89,7 @@ class CreateItem extends Component {
             e.preventDefault();
             e.persist();
             const res = await createItem();
-            console.log('CREATE_ITEM_MUTATION', { e, res });
+            // console.log('CREATE_ITEM_MUTATION', { e, res }); // ⚠️
 
             // redirects user using the pathname and id from the query
             Router.push({
@@ -136,4 +136,3 @@ class CreateItem extends Component {
 }
 
 export default CreateItem;
-export { CREATE_ITEM_MUTATION }
