@@ -33,7 +33,7 @@ const User = props => (
     query={CURRENT_USER_QUERY} // pass in query
   >
     {/* instead of rendering function here as a child, instead we'll pass the payload onto the child component to render: */}
-    {/* ⚠️ {payload => console.log(payload) || props.children(payload)} */}
+    {/* {payload => console.log(payload) || props.children(payload)} */}
     {payload => props.children(payload)}
     {/* this will allow us to pass in this payload without having to rewrite this query every time */}
   </Query>

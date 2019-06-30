@@ -9,7 +9,6 @@ import calcTotalPrice from '../lib/calcTotalPrice';
 import Error from './ErrorMessage';
 import User, { CURRENT_USER_QUERY } from './User';
 
-
 const CREATE_ORDER_MUTATION = gql`
   mutation createOrder($token: String!) {
     createOrder(token: $token) {
@@ -32,8 +31,9 @@ function totalItems(cart) {
 class TakeMyMoney extends React.Component {
   onToken = async (res, createOrder) => {
     NProgress.start()
-    console.log('On Token Called!');
-    console.log(res.id);
+    // console.log('On Token Called!');  // ⚠️
+    // console.log(res.id);  // ⚠️
+
     // manually call the mutation once we have the stripe token
     const order = await createOrder({
       variables: {
@@ -42,7 +42,7 @@ class TakeMyMoney extends React.Component {
     }).catch(err => {
       alert(err.message);
     });
-    console.log(order); // logging order after charged and saved
+    // console.log(order); // ⚠️ logging order after charged and saved
     // send customer to review order details after a successful transaction
     Router.push({
       pathname: `/order`, // route user to order page
@@ -54,30 +54,33 @@ class TakeMyMoney extends React.Component {
   render() {
     return (
       <User>
-        {({ data: { me } }) => (
-          <Mutation
-            mutation={CREATE_ORDER_MUTATION}
-            refetchQueries={[{ query: CURRENT_USER_QUERY }]}
-          >
-            {createOrder => (
-              <StripeCheckout
-                // prop amount from react-stripe-checkout
-                amount={calcTotalPrice(me.cart)}
-                // uses custom calcTotal fn.
-                name="Sick Fits"
-                description={`Order of ${totalItems(me.cart)} items!`}
-                // calls totalItems which returns a count of all items in the cart.
-                image={me.cart.length && me.cart[0].item && me.cart[0].item.image}
-                stripeKey="pk_test_8CFT10jR6SmGglT0nmRmouxm00UHXOR8UV"
-                currency="USD"
-                email={me.email}
-                token={res => this.onToken(res, createOrder)}
-              >
-                {this.props.children}
-              </StripeCheckout>
-            )}
-          </Mutation>
-        )}
+        {({ data: { me }, loading }) => {
+          if (loading) return null;
+          return (
+            <Mutation
+              mutation={CREATE_ORDER_MUTATION}
+              refetchQueries={[{ query: CURRENT_USER_QUERY }]}
+            >
+              {createOrder => (
+                <StripeCheckout
+                  // prop amount from react-stripe-checkout
+                  amount={calcTotalPrice(me.cart)}
+                  // uses custom calcTotal fn.
+                  name="Sick Fits"
+                  description={`Order of ${totalItems(me.cart)} items!`}
+                  // calls totalItems which returns a count of all items in the cart.
+                  image={me.cart.length && me.cart[0].item && me.cart[0].item.image}
+                  stripeKey="pk_test_8CFT10jR6SmGglT0nmRmouxm00UHXOR8UV"
+                  currency="USD"
+                  email={me.email}
+                  token={res => this.onToken(res, createOrder)}
+                >
+                  {this.props.children}
+                </StripeCheckout>
+              )}
+            </Mutation>
+          )
+        }}
       </User>
     );
   }

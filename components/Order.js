@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Query } from 'react-apollo';
 import { format } from 'date-fns';
@@ -6,9 +6,9 @@ import Head from 'next/head';
 import gql from 'graphql-tag';
 import formatMoney from '../lib/formatMoney';
 import Error from './ErrorMessage';
-import OrderStyles from './styles/OrderItemStyles';
+import OrderStyles from './styles/OrderStyles';
 
-const SINGLE_ORDER_QUERY = gql`
+export const SINGLE_ORDER_QUERY = gql`
   query SINGLE_ORDER_QUERY($id: ID!) {
     order(id: $id) {
       id
@@ -30,20 +30,20 @@ const SINGLE_ORDER_QUERY = gql`
   }
 `;
 
-class Order extends Component {
+
+class Order extends React.Component {
   static propTypes = {
-    id: PropTypes.string.isRequried,
-  }
+    id: PropTypes.string.isRequired,
+  };
   render() {
     return (
       <Query query={SINGLE_ORDER_QUERY} variables={{ id: this.props.id }}>
         {({ data, error, loading }) => {
           if (error) return <Error error={error} />;
           if (loading) return <p>Loading...</p>;
-          console.log(data);
           const order = data.order;
           return (
-            <OrderStyles>
+            <OrderStyles data-test="order">
               <Head>
                 <title>Sick Fits - Order {order.id}</title>
               </Head>
@@ -57,7 +57,7 @@ class Order extends Component {
               </p>
               <p>
                 <span>Date</span>
-                <span>{format(new Date(order.createdAt), 'MMMM d, yyyy h:mm a')}</span>
+                <span>{format(Date.parse(order.createdAt), "MMMM dd, yyyy h:mm a")}</span>
                 {/* using format helper fn to display pretty date. */}
               </p>
               <p>
